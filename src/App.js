@@ -6,6 +6,7 @@ import ChatWindow from './components/ChatWindow';
 import VoiceController from './utils/VoiceController';
 import AIHandler from './utils/AIHandler';
 import SearchHandler from './utils/SearchHandler';
+import DemoHandler from './utils/DemoHandler';
 
 function App() {
   const [isListening, setIsListening] = useState(false);
@@ -23,12 +24,14 @@ function App() {
   const voiceControllerRef = useRef(null);
   const aiHandlerRef = useRef(null);
   const searchHandlerRef = useRef(null);
+  const demoHandlerRef = useRef(null);
 
   useEffect(() => {
     // Initialize handlers
     voiceControllerRef.current = new VoiceController();
     aiHandlerRef.current = new AIHandler();
     searchHandlerRef.current = new SearchHandler();
+    demoHandlerRef.current = new DemoHandler();
 
     return () => {
       if (voiceControllerRef.current) {
@@ -85,10 +88,19 @@ function App() {
           .toLowerCase()
           .replace(/search|find|look up|for the web/gi, '')
           .trim();
-        responseText = await searchHandlerRef.current.search(searchQuery);
+        try {
+          responseText = await searchHandlerRef.current.search(searchQuery);
+        } catch (err) {
+          responseText = demoHandlerRef.current.getResponse(userMessage);
+        }
       } else {
-        // Use OpenAI for general conversation
-        responseText = await aiHandlerRef.current.chat(userMessage);
+        // Try OpenAI first, fall back to demo mode
+        try {
+          responseText = await aiHandlerRef.current.chat(userMessage);
+        } catch (err) {
+          // Fall back to demo mode if OpenAI fails
+          responseText = demoHandlerRef.current.getResponse(userMessage);
+        }
       }
 
       setIsThinking(false);
