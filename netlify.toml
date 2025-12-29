@@ -3,6 +3,9 @@
   publish = "build"
   functions = "netlify/functions"
 
+[build.environment]
+  NODE_VERSION = "18.21.0"
+
 [dev]
   command = "npm start"
   functions = "netlify/functions"
