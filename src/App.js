@@ -113,7 +113,7 @@ function App() {
       const errorMsg = {
         id: Date.now() + 1,
         role: 'assistant',
-        content: 'I encountered an error processing your request. Please try again.',
+        content: `Error: ${error.message || 'Unknown error occurred'}. Please check the browser console for details.`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMsg]);

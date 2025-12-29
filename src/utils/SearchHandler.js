@@ -6,7 +6,9 @@ class SearchHandler {
       );
 
       if (!response.ok) {
-        throw new Error(`Search API error: ${response.statusText}`);
+        const errorText = await response.text();
+        console.error('Search function error:', response.status, errorText);
+        throw new Error(`Search API error (${response.status}): ${errorText}`);
       }
 
       const data = await response.json();

@@ -5,8 +5,14 @@ exports.handler = async function (event) {
     }
 
     const apiKey = process.env.OPENAI_API_KEY;
+    console.log('OpenAI API key present:', !!apiKey);
+    console.log('OpenAI API key length:', apiKey ? apiKey.length : 0);
+    
     if (!apiKey) {
-      return { statusCode: 500, body: 'Missing OPENAI_API_KEY' };
+      return { 
+        statusCode: 500, 
+        body: JSON.stringify({ error: 'Missing OPENAI_API_KEY environment variable' })
+      };
     }
 
     const { history = [], userMessage = '' } = JSON.parse(event.body || '{}');
@@ -35,7 +41,12 @@ exports.handler = async function (event) {
 
     if (!resp.ok) {
       const err = await resp.text();
-      return { statusCode: resp.status, body: err };
+      console.error('OpenAI API error:', resp.status, err);
+      return { 
+        statusCode: resp.status, 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: `OpenAI error: ${err}` })
+      };
     }
 
     const data = await resp.json();
@@ -47,6 +58,11 @@ exports.handler = async function (event) {
       body: JSON.stringify({ text }),
     };
   } catch (e) {
-    return { statusCode: 500, body: e.message };
+    console.error('Function error:', e);
+    return { 
+      statusCode: 500, 
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: e.message })
+    };
   }
 };

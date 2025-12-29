@@ -22,8 +22,9 @@ class AIHandler {
         if (response.status === 404) {
           return "I'm running in demo mode. To enable full AI chat, please deploy to Netlify or run 'npx netlify dev' locally. For now, I've heard your message: \"" + userMessage + "\". Please set up the OpenAI integration to get intelligent responses.";
         }
-        const error = await response.text();
-        throw new Error(`AI service error: ${error}`);
+        const errorText = await response.text();
+        console.error('AI function error:', response.status, errorText);
+        throw new Error(`AI service error (${response.status}): ${errorText}`);
       }
 
       const data = await response.json();
