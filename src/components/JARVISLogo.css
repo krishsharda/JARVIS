@@ -1,0 +1,41 @@
+.jarvis-logo-container {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.jarvis-canvas {
+  display: block;
+  border-radius: 50%;
+  background: rgba(10, 14, 39, 0.5);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 30px rgba(0, 212, 255, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.logo-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: #00d4ff;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* State-specific styling */
+.jarvis-canvas.listening {
+  box-shadow: 0 0 40px rgba(255, 107, 107, 0.4), inset 0 0 30px rgba(255, 107, 107, 0.1);
+}
+
+.jarvis-canvas.thinking {
+  box-shadow: 0 0 40px rgba(255, 217, 61, 0.4), inset 0 0 30px rgba(255, 217, 61, 0.1);
+}
+
+.jarvis-canvas.speaking {
+  box-shadow: 0 0 40px rgba(107, 207, 127, 0.4), inset 0 0 30px rgba(107, 207, 127, 0.1);
+}
