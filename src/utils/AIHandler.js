@@ -18,13 +18,26 @@ class AIHandler {
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('GROQ API function error:', response.status, errorText);
+        console.error('Full error response:', errorText);
+        
         // If function isn't available, provide a helpful message
         if (response.status === 404) {
-          return "I'm running in demo mode. To enable full AI chat, please deploy to Netlify or run 'npx netlify dev' locally. For now, I've heard your message: \"" + userMessage + "\". Please set up the GROQ integration to get intelligent responses.";
+          throw new Error("Netlify function not found. Please deploy to Netlify or run 'npx netlify dev' locally.");
         }
-        const errorText = await response.text();
-        console.error('AI function error:', response.status, errorText);
-        throw new Error(`AI service error (${response.status}): ${errorText}`);
+        
+        // Parse error if it's JSON
+        try {
+          const errorData = JSON.parse(errorText);
+          if (errorData.error && errorData.error.includes('GROQ_API_KEY')) {
+            throw new Error('GROQ_API_KEY not configured in Netlify. Please add it in Site Settings → Environment variables.');
+          }
+        } catch (e) {
+          // Not JSON, continue
+        }
+        
+        throw new Error(`GROQ API error (${response.status}): ${errorText}`);
       }
 
       const data = await response.json();

@@ -94,11 +94,13 @@ function App() {
           responseText = demoHandlerRef.current.getResponse(userMessage);
         }
       } else {
-        // Try OpenAI first, fall back to demo mode
+        // Try GROQ AI first, fall back to demo mode
         try {
           responseText = await aiHandlerRef.current.chat(userMessage);
+          console.log('GROQ AI response received:', responseText);
         } catch (err) {
-          // Fall back to demo mode if OpenAI fails
+          console.error('GROQ AI failed, using demo mode:', err);
+          // Fall back to demo mode if GROQ fails
           responseText = demoHandlerRef.current.getResponse(userMessage);
         }
       }
