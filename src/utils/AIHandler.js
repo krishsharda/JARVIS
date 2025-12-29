@@ -20,7 +20,7 @@ class AIHandler {
       if (!response.ok) {
         // If function isn't available, provide a helpful message
         if (response.status === 404) {
-          return "I'm running in demo mode. To enable full AI chat, please deploy to Netlify or run 'npx netlify dev' locally. For now, I've heard your message: \"" + userMessage + "\". Please set up the OpenAI integration to get intelligent responses.";
+          return "I'm running in demo mode. To enable full AI chat, please deploy to Netlify or run 'npx netlify dev' locally. For now, I've heard your message: \"" + userMessage + "\". Please set up the GROQ integration to get intelligent responses.";
         }
         const errorText = await response.text();
         console.error('AI function error:', response.status, errorText);

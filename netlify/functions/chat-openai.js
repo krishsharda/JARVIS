@@ -4,27 +4,27 @@ exports.handler = async function (event) {
       return { statusCode: 405, body: 'Method Not Allowed' };
     }
 
-    const apiKey = process.env.OPENAI_API_KEY;
-    console.log('OpenAI API key present:', !!apiKey);
-    console.log('OpenAI API key length:', apiKey ? apiKey.length : 0);
+    const apiKey = process.env.GROQ_API_KEY;
+    console.log('GROQ API key present:', !!apiKey);
+    console.log('GROQ API key length:', apiKey ? apiKey.length : 0);
     
     if (!apiKey) {
       return { 
         statusCode: 500, 
-        body: JSON.stringify({ error: 'Missing OPENAI_API_KEY environment variable' })
+        body: JSON.stringify({ error: 'Missing GROQ_API_KEY environment variable' })
       };
     }
 
     const { history = [], userMessage = '' } = JSON.parse(event.body || '{}');
 
-    const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'mixtral-8x7b-32768',
         messages: [
           {
             role: 'system',
@@ -41,11 +41,11 @@ exports.handler = async function (event) {
 
     if (!resp.ok) {
       const err = await resp.text();
-      console.error('OpenAI API error:', resp.status, err);
+      console.error('GROQ API error:', resp.status, err);
       return { 
         statusCode: resp.status, 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: `OpenAI error: ${err}` })
+        body: JSON.stringify({ error: `GROQ error: ${err}` })
       };
     }
 
