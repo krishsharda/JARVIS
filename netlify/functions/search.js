@@ -1,8 +1,8 @@
 exports.handler = async function (event) {
   try {
-    const apiKey = process.env.SERPAPI_KEY || process.env.SEARCH_API_KEY;
+    const apiKey = process.env.SEARCH_API_KEY || process.env.SERPAPI_KEY;
     if (!apiKey) {
-      return { statusCode: 500, body: 'Missing SERPAPI_KEY/SEARCH_API_KEY' };
+      return { statusCode: 500, body: JSON.stringify({ error: 'Missing SEARCH_API_KEY environment variable' }) };
     }
 
     const query = new URLSearchParams(event.queryStringParameters || {}).get('q') || new URLSearchParams(event.queryStringParameters || {}).get('query') || '';
