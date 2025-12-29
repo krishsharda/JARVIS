@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './ChatWindow.css';
 
 function ChatWindow({ messages }) {
   const [autoScroll, setAutoScroll] = useState(true);
   const messagesEndRef = React.useRef(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     if (autoScroll && messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, [autoScroll]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, autoScroll]);
+  }, [messages, autoScroll, scrollToBottom]);
 
   const handleScroll = (e) => {
     const element = e.target;

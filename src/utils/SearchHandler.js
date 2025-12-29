@@ -1,6 +1,4 @@
 class SearchHandler {
-  constructor() {}
-
   async search(query) {
     try {
       const response = await fetch(
