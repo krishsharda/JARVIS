@@ -28,7 +28,7 @@ class DemoHandler {
       'bye': 'See you later! Feel free to come back anytime.',
 
       // Default helpful response
-      'default': 'That\'s an interesting question! In the full version with OpenAI credits, I can provide more intelligent and personalized responses. For now, I\'m running in demo mode. Feel free to ask me anything - I\'m here to help!'
+      'default': 'That\'s an interesting question! In the full version with GROQ AI, I can provide more intelligent and personalized responses. For now, I\'m running in demo mode. Feel free to ask me anything - I\'m here to help!'
     };
   }
 
