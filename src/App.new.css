@@ -10,8 +10,36 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #000000;
+  background: linear-gradient(135deg, #000000 0%, #0a0a1a 50%, #000000 100%);
   color: #fff;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse 800px 400px at 50% -50%, rgba(0, 100, 150, 0.08), transparent),
+    radial-gradient(ellipse 600px 300px at 50% 150%, rgba(0, 80, 120, 0.06), transparent),
+    radial-gradient(ellipse 700px 350px at 100% 50%, rgba(0, 60, 100, 0.05), transparent);
+  pointer-events: none;
+  z-index: -1;
+  animation: bgPulse 15s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 #root {
