@@ -184,7 +184,7 @@ function App() {
             disabled={isThinking || isSpeaking}
             title="Click to speak or press Enter"
           >
-            🎤
+            MIC
           </button>
           <input
             type="text"

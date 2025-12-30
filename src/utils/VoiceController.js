@@ -89,14 +89,33 @@ class VoiceController {
       if (response.ok) {
         const base64 = await response.text();
         const audio = new Audio(`data:audio/mpeg;base64,${base64}`);
-        audio.playbackRate = 1.2; // Speed up playback by 20%
+        audio.playbackRate = 1.5; // Speed up playback by 50%
+        audio.volume = 1.0;
+        
+        // Preload and play immediately
         return new Promise((resolve, reject) => {
+          audio.oncanplay = () => {
+            audio.play().catch(reject);
+          };
           audio.onended = resolve;
           audio.onerror = reject;
-          audio.play().catch(reject);
+          
+          // Fallback if oncanplay never fires
+          const playTimer = setTimeout(() => {
+            if (audio.paused) {
+              audio.play().catch(reject);
+            }
+          }, 100);
+          
+          const originalResolve = resolve;
+          resolve = () => {
+            clearTimeout(playTimer);
+            originalResolve();
+          };
         });
       }
     } catch (err) {
+      console.error('ElevenLabs error:', err);
       // fall through to browser speech synthesis
     }
 
@@ -109,7 +128,7 @@ class VoiceController {
           const preferred =
             voices.find((v) => /en-US|English/i.test(v.lang)) || voices[0];
           if (preferred) utterance.voice = preferred;
-          utterance.rate = 1.3; // Speed up speech by 30%
+          utterance.rate = 1.5; // Speed up speech by 50%
           utterance.pitch = 1.0;
           utterance.onend = resolve;
           utterance.onerror = (e) => {
