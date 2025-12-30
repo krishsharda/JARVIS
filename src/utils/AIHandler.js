@@ -11,7 +11,7 @@ class AIHandler {
     });
 
     try {
-      const response = await fetch('/.netlify/functions/chat-openai', {
+      const response = await fetch('/api/chat-openai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ history: this.conversationHistory, userMessage }),

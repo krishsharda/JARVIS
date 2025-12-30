@@ -2,7 +2,7 @@ class SearchHandler {
   async search(query) {
     try {
       const response = await fetch(
-        `/.netlify/functions/search?q=${encodeURIComponent(query)}`
+        `/api/search?q=${encodeURIComponent(query)}`
       );
 
       if (!response.ok) {

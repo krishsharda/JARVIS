@@ -78,9 +78,9 @@ class VoiceController {
   }
 
   async speak(text) {
-    // First try ElevenLabs via Netlify Function
+    // First try ElevenLabs via Vercel API
     try {
-      const response = await fetch('/.netlify/functions/tts-elevenlabs', {
+      const response = await fetch('/api/tts-elevenlabs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text }),
