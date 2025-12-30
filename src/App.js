@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.new.css';
-import JarvisOrb from './components/JarvisOrb.tsx';
-import CinematicBackground from './components/CinematicBackground.tsx';
+import JarvisOrb from './components/JarvisOrb';
+import CinematicBackground from './components/CinematicBackground';
 import ChatWindow from './components/ChatWindow';
 import VoiceController from './utils/VoiceController';
 import AIHandler from './utils/AIHandler';
