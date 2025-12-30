@@ -12,6 +12,7 @@ class VoiceController {
         this.recognition.continuous = false;
         this.recognition.interimResults = true;
         this.recognition.lang = 'en-US';
+        this.recognition.maxAlternatives = 1;
       } else {
         this.recognition = null;
       }
@@ -58,7 +59,13 @@ class VoiceController {
 
       this.recognition.onerror = (event) => {
         this.isListening = false;
-        reject(new Error(`Speech recognition error: ${event.error}`));
+        if (event.error === 'no-speech') {
+          reject(new Error('No speech detected. Please try again.'));
+        } else if (event.error === 'network') {
+          reject(new Error('Network error. Please check your connection.'));
+        } else {
+          reject(new Error(`Speech recognition error: ${event.error}`));
+        }
       };
 
       try {
@@ -89,34 +96,21 @@ class VoiceController {
       if (response.ok) {
         const base64 = await response.text();
         const audio = new Audio(`data:audio/mpeg;base64,${base64}`);
-        audio.playbackRate = 1.5; // Speed up playback by 50%
+        audio.playbackRate = 1.5;
         audio.volume = 1.0;
         
-        // Preload and play immediately
         return new Promise((resolve, reject) => {
-          audio.oncanplay = () => {
-            audio.play().catch(reject);
-          };
           audio.onended = resolve;
           audio.onerror = reject;
-          
-          // Fallback if oncanplay never fires
-          const playTimer = setTimeout(() => {
-            if (audio.paused) {
-              audio.play().catch(reject);
-            }
-          }, 100);
-          
-          const originalResolve = resolve;
-          resolve = () => {
-            clearTimeout(playTimer);
-            originalResolve();
-          };
+          audio.play().catch(reject);
         });
+      } else if (response.status === 401) {
+        console.warn('ElevenLabs API key not configured - using browser TTS');
+      } else if (response.status === 404) {
+        console.warn('ElevenLabs function not found - using browser TTS');
       }
     } catch (err) {
-      console.error('ElevenLabs error:', err);
-      // fall through to browser speech synthesis
+      console.warn('ElevenLabs error, falling back to browser TTS:', err.message);
     }
 
     // Fallback: Web Speech Synthesis API (no external API required)
