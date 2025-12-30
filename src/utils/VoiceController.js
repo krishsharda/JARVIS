@@ -12,7 +12,6 @@ class VoiceController {
         this.recognition.continuous = false;
         this.recognition.interimResults = true;
         this.recognition.lang = 'en-US';
-        this.recognition.maxAlternatives = 1;
       } else {
         this.recognition = null;
       }
@@ -59,13 +58,7 @@ class VoiceController {
 
       this.recognition.onerror = (event) => {
         this.isListening = false;
-        if (event.error === 'no-speech') {
-          reject(new Error('No speech detected. Please try again.'));
-        } else if (event.error === 'network') {
-          reject(new Error('Network error. Please check your connection.'));
-        } else {
-          reject(new Error(`Speech recognition error: ${event.error}`));
-        }
+        reject(new Error(`Speech recognition error: ${event.error}`));
       };
 
       try {
@@ -96,21 +89,15 @@ class VoiceController {
       if (response.ok) {
         const base64 = await response.text();
         const audio = new Audio(`data:audio/mpeg;base64,${base64}`);
-        audio.playbackRate = 1.5;
-        audio.volume = 1.0;
-        
+        audio.playbackRate = 1.2; // Faster playback (1.2x speed)
         return new Promise((resolve, reject) => {
           audio.onended = resolve;
           audio.onerror = reject;
           audio.play().catch(reject);
         });
-      } else if (response.status === 401) {
-        console.warn('ElevenLabs API key not configured - using browser TTS');
-      } else if (response.status === 404) {
-        console.warn('ElevenLabs function not found - using browser TTS');
       }
     } catch (err) {
-      console.warn('ElevenLabs error, falling back to browser TTS:', err.message);
+      // fall through to browser speech synthesis
     }
 
     // Fallback: Web Speech Synthesis API (no external API required)
@@ -122,7 +109,7 @@ class VoiceController {
           const preferred =
             voices.find((v) => /en-US|English/i.test(v.lang)) || voices[0];
           if (preferred) utterance.voice = preferred;
-          utterance.rate = 1.5; // Speed up speech by 50%
+          utterance.rate = 1.3; // Faster speech (1.3x speed)
           utterance.pitch = 1.0;
           utterance.onend = resolve;
           utterance.onerror = (e) => {

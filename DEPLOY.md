@@ -80,7 +80,7 @@ npm start
 
 ---
 
-## Features
+## 🚀 Features
 
 - **Voice Input**: Browser Speech Recognition
 - **Voice Output**: ElevenLabs API (with browser fallback)

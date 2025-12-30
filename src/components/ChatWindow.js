@@ -39,7 +39,7 @@ function ChatWindow({ messages }) {
               {message.role === 'user' ? (
                 <span className="avatar-icon">👤</span>
               ) : (
-                <span className="avatar-icon">J</span>
+                <span className="avatar-icon">🤖</span>
               )}
             </div>
             <div className="message-content">

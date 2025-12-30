@@ -4,27 +4,27 @@ A web-based JARVIS assistant inspired by Iron Man that you can talk to using you
 
 ## Features
 
-** Voice Conversation (Two-Way)**
+✨ **Voice Conversation (Two-Way)**
 - Speak naturally to JARVIS
 - Realistic AI voice responses
 - Natural conversation flow
 
-** Smart Question Answering**
+🔍 **Smart Question Answering**
 - Answers general knowledge questions
 - Provides up-to-date information
 - Uses web search for current events
 
-** Smart Web Search**
+🌐 **Smart Web Search**
 - "Search the web for..."
 - Summarizes results
 - Reads answers aloud
 
-** Quick Actions**
+🚀 **Quick Actions**
 - Open websites
 - Browser-based file links
 - Safe and secure MVP
 
-** Animated UI**
+✨ **Animated UI**
 - Particle orb JARVIS logo
 - Siri-like voice wave animation
 - Real-time state indicators
@@ -160,4 +160,4 @@ For issues and suggestions, please open an issue on GitHub or contact the develo
 
 ---
 
-**JARVIS: Always Ready to Assist**
+**JARVIS: Always Ready to Assist** 🤖✨
