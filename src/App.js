@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './App.css';
-import JARVISLogo from './components/JARVISLogo';
-import VoiceWaveAnimation from './components/VoiceWaveAnimation';
+import './App.new.css';
+import JarvisOrb from './components/JarvisOrb.tsx';
+import CinematicBackground from './components/CinematicBackground.tsx';
 import ChatWindow from './components/ChatWindow';
 import VoiceController from './utils/VoiceController';
 import AIHandler from './utils/AIHandler';
@@ -134,95 +134,70 @@ function App() {
     }
   };
 
-  const getLogoState = () => {
+  const getOrbState = () => {
     if (isListening) return 'listening';
-    if (isThinking) return 'thinking';
     if (isSpeaking) return 'speaking';
+    if (isThinking) return 'wake';
     return 'idle';
   };
 
   return (
-    <div className="app">
-      <div className="container">
-        <div className="main-content">
-          {/* Left Panel - Logo and Animation */}
-          <div className="left-panel">
-            <div className="logo-section">
-              <JARVISLogo state={getLogoState()} />
-              <VoiceWaveAnimation
-                isActive={isListening || isSpeaking}
-                isListening={isListening}
-              />
-            </div>
+    <div className="app-container">
+      <CinematicBackground />
 
-            {/* Transcript display */}
-            {transcript && (
-              <div className="transcript-display">
-                <p className="label">You said:</p>
-                <p className="text">{transcript}</p>
-              </div>
-            )}
+      <div className="app-content">
+        {/* Centered JARVIS Orb */}
+        <div className="orb-display">
+          <JarvisOrb state={getOrbState()} />
+        </div>
 
-            {/* Status indicator */}
-            <div className="status-indicator">
-              <span className={`status-dot ${getLogoState()}`}></span>
-              <span className="status-text">
-                {isListening
-                  ? 'Listening...'
-                  : isThinking
-                  ? 'Thinking...'
-                  : isSpeaking
-                  ? 'Speaking...'
-                  : 'Ready'}
-              </span>
-            </div>
-
-            {/* Text input fallback */}
-            <div className="text-input-container">
-              <input
-                type="text"
-                className="text-input"
-                placeholder="Type your message here..."
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim()) {
-                    processUserInput(e.target.value);
-                    e.target.value = '';
-                  }
-                }}
-                disabled={isThinking}
-              />
-              <button
-                className="send-button"
-                onClick={(e) => {
-                  const input = e.target.previousElementSibling;
-                  if (input.value.trim()) {
-                    processUserInput(input.value);
-                    input.value = '';
-                  }
-                }}
-                disabled={isThinking}
-              >
-                Send
-              </button>
-            </div>
-
-            {/* Microphone button */}
-            <button
-              className={`mic-button ${
-                isListening || isThinking ? 'active' : ''
-              }`}
-              onClick={handleMicClick}
-              disabled={isThinking}
-            >
-              <span className="mic-icon">🎤</span>
-              {isListening ? 'Stop Listening' : 'Click to Talk'}
-            </button>
+        {/* Status text */}
+        <div className="status-info">
+          <div className={`status-text ${!isListening && !isThinking && !isSpeaking ? 'active' : ''}`}>
+            {isListening
+              ? 'Listening...'
+              : isThinking
+              ? 'Processing...'
+              : isSpeaking
+              ? 'Speaking...'
+              : 'JARVIS'}
           </div>
+        </div>
 
-          {/* Right Panel - Chat */}
-          <div className="right-panel">
-            <ChatWindow messages={messages} />
+        {/* Voice transcript display */}
+        {transcript && (
+          <div className="transcript-display">
+            {transcript}
           </div>
+        )}
+
+        {/* Chat window - bottom right */}
+        <div className="chat-window-container">
+          <ChatWindow messages={messages} />
+        </div>
+
+        {/* Input area - mic button and text input */}
+        <div className="input-area">
+          <button
+            className={`mic-button ${isListening ? 'active' : ''}`}
+            onClick={handleMicClick}
+            disabled={isThinking || isSpeaking}
+            title="Click to speak or press Enter"
+          >
+            🎤
+          </button>
+          <input
+            type="text"
+            className="input-field"
+            placeholder="Or type here..."
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && e.target.value.trim()) {
+                processUserInput(e.target.value);
+                e.target.value = '';
+              }
+            }}
+            disabled={isThinking || isSpeaking}
+          />
         </div>
       </div>
     </div>
