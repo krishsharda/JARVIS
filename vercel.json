@@ -2,8 +2,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "env": {
-    "NODE_VERSION": "24.0.0"
+    "NODE_VERSION": "22.0.0"
   },
-  "nodeVersion": "24.x",
+  "nodeVersion": "22.x",
   "installCommand": "npm install"
 }
