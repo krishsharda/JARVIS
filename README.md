@@ -1,23 +1,60 @@
 # JARVIS AI Assistant
 
-A web-based JARVIS assistant inspired by Iron Man that you can talk to using your voice. JARVIS listens to voice commands, processes them with AI, and responds with a realistic AI voice.
+A voice-enabled AI assistant inspired by Iron Man, built with React and powered by GROQ AI.
 
 ## Features
 
-✨ **Voice Conversation (Two-Way)**
+✨ **Voice Conversation**
 - Speak naturally to JARVIS
-- Realistic AI voice responses
-- Natural conversation flow
+- Realistic AI voice responses (ElevenLabs TTS)
+- Natural conversational flow
 
-🔍 **Smart Question Answering**
-- Answers general knowledge questions
-- Provides up-to-date information
-- Uses web search for current events
+🔍 **AI-Powered Chat**
+- Uses GROQ's Llama 3.3 70B model
+- Intelligent and witty responses
+- Context-aware conversations
 
-🌐 **Smart Web Search**
-- "Search the web for..."
-- Summarizes results
-- Reads answers aloud
+🌐 **Web Search**
+- Search the web for information
+- Summarized search results
+- Voice-delivered answers
+
+## Tech Stack
+
+- **Frontend**: React 18.2.0
+- **AI**: GROQ API (Llama 3.3 70B)
+- **Voice**: Web Speech API + ElevenLabs TTS
+- **Search**: SerpAPI
+- **Hosting**: Vercel
+- **Runtime**: Node.js 22.x
+
+## Environment Variables
+
+Create a `.env` file or add to Vercel dashboard:
+
+```
+GROQ_API_KEY=your_groq_api_key
+ELEVENLABS_API_KEY=your_elevenlabs_api_key
+SEARCH_API_KEY=your_serpapi_key
+```
+
+## Development
+
+```bash
+npm install
+npm start
+```
+
+## Deployment
+
+Deployed on Vercel. Serverless functions in `/api` handle:
+- `/api/chat-openai` - GROQ AI responses
+- `/api/tts-elevenlabs` - Text-to-speech synthesis
+- `/api/search` - Web search via SerpAPI
+
+## License
+
+MIT
 
 🚀 **Quick Actions**
 - Open websites
