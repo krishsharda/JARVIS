@@ -108,7 +108,7 @@ class VoiceController {
           const preferred =
             voices.find((v) => /en-US|English/i.test(v.lang)) || voices[0];
           if (preferred) utterance.voice = preferred;
-          utterance.rate = 2.0;
+          utterance.rate = 1.4;
           utterance.pitch = 1.0;
           utterance.onend = resolve;
           utterance.onerror = (e) => {
