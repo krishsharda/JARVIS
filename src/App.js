@@ -214,7 +214,8 @@ function App() {
               onClick={handleMicClick}
               disabled={isThinking}
             >
-              {isListening ? 'STOP' : 'SPEAK'}
+              <span className="mic-icon">🎤</span>
+              {isListening ? 'Stop Listening' : 'Click to Talk'}
             </button>
           </div>
 
