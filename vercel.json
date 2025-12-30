@@ -4,6 +4,5 @@
   "env": {
     "NODE_VERSION": "22.0.0"
   },
-  "nodeVersion": "22.x",
   "installCommand": "npm install"
 }
