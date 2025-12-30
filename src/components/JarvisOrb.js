@@ -28,7 +28,11 @@ const JarvisOrb = ({ state = 'idle' }) => {
     // Initialize particles
     const initParticles = () => {
       const particles = [];
-      const count = state === 'idle' ? 40 : state === 'listening' ? 80 : 60;
+      // Reduce particles on mobile for better performance
+      const isMobile = window.innerWidth < 768;
+      const count = isMobile 
+        ? (state === 'idle' ? 20 : state === 'listening' ? 40 : 30)
+        : (state === 'idle' ? 40 : state === 'listening' ? 80 : 60);
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
@@ -55,7 +59,7 @@ const JarvisOrb = ({ state = 'idle' }) => {
     const animate = () => {
       if (!canvas || !ctx) return;
 
-      ctx.fillStyle = 'rgba(5, 15, 40, 0.1)';
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const centerX = canvas.width / 2;
