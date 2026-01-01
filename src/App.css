@@ -1,7 +1,7 @@
 .app {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  background: #000000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,11 +29,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 40px;
-  background: rgba(20, 25, 50, 0.6);
+  background: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
 
 .logo-section {

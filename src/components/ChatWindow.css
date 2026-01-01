@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: rgba(10, 14, 39, 0.4);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .chat-header {
@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(0, 212, 255, 0.05);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .chat-header h2 {
