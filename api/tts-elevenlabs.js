@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const { text = '' } = req.body;
 
     const resp = await fetch(
-      'https://api.elevenlabs.io/v1/text-to-speech/s3TPKV1kjDlVtZbl4Ksh',
+      'https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM',
       {
         method: 'POST',
         headers: {
@@ -21,8 +21,8 @@ export default async function handler(req, res) {
         },
         body: JSON.stringify({
           text,
-          model_id: 'eleven_multilingual_v2',
-          voice_settings: { stability: 0.5, similarity_boost: 0.75 },
+          model_id: 'eleven_monolingual_v1',
+          voice_settings: { stability: 0.7, similarity_boost: 0.85 },
         }),
       }
     );

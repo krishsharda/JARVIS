@@ -110,6 +110,7 @@ class VoiceController {
           if (preferred) utterance.voice = preferred;
           utterance.rate = 1.0;
           utterance.pitch = 1.0;
+          utterance.volume = 1.0;
           utterance.onend = resolve;
           utterance.onerror = (e) => {
             console.error('Speech synthesis error:', e);
